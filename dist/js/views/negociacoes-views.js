@@ -13,11 +13,21 @@ export class NegociacoesView {
                     </tr>
                 </thead>
                 <tbody>
+                    ${this.novaNegociacao}
                 </tbody>
             </table>
         `;
     }
-    update() {
+    update(data, quantidade, valor) {
+        this.novaNegociacao = `
+        <tr>
+            <th>${data.getTime()}</th>
+            <th>${quantidade}</th>
+            <th>${valor}</th>
+        </tr>
+        `;
+    }
+    exibir() {
         this.elemento.innerHTML = this.template();
     }
 }

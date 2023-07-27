@@ -30,6 +30,9 @@ export class NegociacaoController {
         this.inputData.focus();
     }
     exibaTabela() {
-        this.negociacoesView.update();
+        this.negociacoesView.exibir();
+    }
+    atualizarTabela() {
+        this.negociacoesView.update(this.criaNegociacao().data, this.criaNegociacao().quantidade, this.criaNegociacao().valor);
     }
 }

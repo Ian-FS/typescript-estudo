@@ -43,6 +43,15 @@ export class NegociacaoController{
     }
 
     exibaTabela() {
-        this.negociacoesView.update()
+        this.negociacoesView.exibir()
+    }
+
+    atualizarTabela(){
+        const listaNegociacoes:Array<Negociacao> = [];
+        this.negociacoes.lista().forEach(negociacao => {
+            listaNegociacoes.push(negociacao)
+        })
+        console.log(listaNegociacoes)
+        this.negociacoesView.update(listaNegociacoes)
     }
 }
