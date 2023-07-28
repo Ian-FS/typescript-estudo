@@ -13,6 +13,7 @@ export class NegociacaoController {
     adiciona() {
         const negociacao = this.criaNegociacao();
         this.negociacoes.adiciona(negociacao);
+        this.negociacoesView.update(this.negociacoes);
         console.log(this.negociacoes.lista());
         this.limpaFormulario();
     }
@@ -30,9 +31,6 @@ export class NegociacaoController {
         this.inputData.focus();
     }
     exibaTabela() {
-        this.negociacoesView.exibir();
-    }
-    atualizarTabela() {
-        this.negociacoesView.update(this.criaNegociacao().data, this.criaNegociacao().quantidade, this.criaNegociacao().valor);
+        this.negociacoesView.update(this.negociacoes);
     }
 }

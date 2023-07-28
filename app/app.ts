@@ -6,10 +6,9 @@ const form = document.querySelector('.form')
 
 form.addEventListener('submit', event => {
     event.preventDefault();
-    controller.adiciona();
-    controller.atualizarTabela();
-    controller.exibaTabela();
-    
+    controller.adiciona();    
     
 })
+
+controller.exibaTabela()
 
