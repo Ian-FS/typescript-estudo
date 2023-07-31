@@ -27,6 +27,7 @@ export class NegociacoesView extends View {
         `;
     }
     update(negociacoesLista) {
-        this.elemento.innerHTML = this.template(negociacoesLista);
+        const template = this.template(negociacoesLista);
+        this.elemento.innerHTML = template;
     }
 }

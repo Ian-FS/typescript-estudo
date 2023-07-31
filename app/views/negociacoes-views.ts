@@ -1,6 +1,6 @@
 import { Negociacoes } from '../models/negociacoes';
 import { View } from './view.js';
-export class NegociacoesView extends View {
+export class NegociacoesView extends View <Negociacoes> {
 
     template(negociacoesLista:Negociacoes): string {
         return `
@@ -31,7 +31,7 @@ export class NegociacoesView extends View {
     }
 
     update(negociacoesLista:Negociacoes){
- 
-        this.elemento.innerHTML = this.template(negociacoesLista);
+        const template = this.template(negociacoesLista)
+        this.elemento.innerHTML = template;
     }
 }

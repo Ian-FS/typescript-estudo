@@ -1,5 +1,5 @@
 import { View } from './view.js';
-export class mensagemView extends View{
+export class mensagemView extends View<string>{
 
     template(mensagem: string) {
         return `
