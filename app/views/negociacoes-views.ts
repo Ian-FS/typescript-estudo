@@ -2,7 +2,7 @@ import { Negociacoes } from '../models/negociacoes';
 import { View } from './view.js';
 export class NegociacoesView extends View <Negociacoes> {
 
-    template(negociacoesLista:Negociacoes): string {
+    template(model:Negociacoes): string {
         return `
             <table class="table table-hover table-bordered">
                 <thead>
@@ -13,7 +13,7 @@ export class NegociacoesView extends View <Negociacoes> {
                     </tr>
                 </thead>
                 <tbody>
-                    ${negociacoesLista.lista().map(negociacao => {
+                    ${model.lista().map(negociacao => {
 
                         return `
                             <tr>
@@ -28,10 +28,5 @@ export class NegociacoesView extends View <Negociacoes> {
                 </tbody>
             </table>
         `
-    }
-
-    update(negociacoesLista:Negociacoes){
-        const template = this.template(negociacoesLista)
-        this.elemento.innerHTML = template;
     }
 }

@@ -5,4 +5,3 @@ form.addEventListener('submit', event => {
     event.preventDefault();
     controller.adiciona();
 });
-controller.exibaTabela();

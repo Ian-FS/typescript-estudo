@@ -1,6 +1,6 @@
 import { View } from './view.js';
 export class NegociacoesView extends View {
-    template(negociacoesLista) {
+    template(model) {
         return `
             <table class="table table-hover table-bordered">
                 <thead>
@@ -11,7 +11,7 @@ export class NegociacoesView extends View {
                     </tr>
                 </thead>
                 <tbody>
-                    ${negociacoesLista.lista().map(negociacao => {
+                    ${model.lista().map(negociacao => {
             return `
                             <tr>
                                 <th>
@@ -25,9 +25,5 @@ export class NegociacoesView extends View {
                 </tbody>
             </table>
         `;
-    }
-    update(negociacoesLista) {
-        const template = this.template(negociacoesLista);
-        this.elemento.innerHTML = template;
     }
 }
