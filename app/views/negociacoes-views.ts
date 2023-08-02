@@ -18,7 +18,7 @@ export class NegociacoesView extends View <Negociacoes> {
                         return `
                             <tr>
                                 <th>
-                                    ${new Intl.DateTimeFormat().format(negociacao.data)}
+                                    ${this.formataData(negociacao.data)}
                                 </th>
                                 <th>${negociacao.quantidade}</th>
                                 <th>${negociacao.valor}</th>
@@ -28,5 +28,9 @@ export class NegociacoesView extends View <Negociacoes> {
                 </tbody>
             </table>
         `
+    }
+
+    private formataData(data:Date): string {
+        return new Intl.DateTimeFormat().format(data)
     }
 }
