@@ -11,6 +11,8 @@ export class NegociacaoController{
     private negociacoes = new Negociacoes();
     private negociacoesView = new NegociacoesView('#negociacoesView')
     private mensagemView = new MensagemView('#mensagemView');
+    private mensagemSucesso = 'Negociação adicionada com sucesso'
+    private mensagemFalha = 'Não é possivel adicionar uma negociação aos finais de semana'
 
     constructor() {
         this.inputData = document.querySelector('#data');
@@ -21,12 +23,20 @@ export class NegociacaoController{
 
     public adiciona(): void {
         const negociacao = this.criaNegociacao();
-        this.negociacoes.adiciona(negociacao);
-        this.atualizaView();
+        if(negociacao.data.getDay() !== 0 && negociacao.data.getDay() !== 6) {
+            this.negociacoes.adiciona(negociacao);
+            this.atualizaView();
+        } else {
+            this.mensagemView.update(this.mensagemFalha)
+        }
         
-        this.mensagemView
-        this.limpaFormulario();
     }
+
+    // verificaDiaUtil(data: Date): boolean {
+    //     if(data.getDay() < 0 && data.getDay() > 6) {
+    //         return false
+    //     } else true
+    // }
 
     private criaNegociacao(): Negociacao {
         const exp = /-/g;
@@ -46,6 +56,7 @@ export class NegociacaoController{
 
     private atualizaView(): void {
         this.negociacoesView.update(this.negociacoes)
-        this.mensagemView.update('Negociação adicionada com sucesso')
+        this.mensagemView.update(this.mensagemSucesso)
+        this.limpaFormulario()
     }
 }

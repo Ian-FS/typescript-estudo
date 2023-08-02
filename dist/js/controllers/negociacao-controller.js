@@ -7,6 +7,8 @@ export class NegociacaoController {
         this.negociacoes = new Negociacoes();
         this.negociacoesView = new NegociacoesView('#negociacoesView');
         this.mensagemView = new MensagemView('#mensagemView');
+        this.mensagemSucesso = 'Negociação adicionada com sucesso';
+        this.mensagemFalha = 'Não é possivel adicionar uma negociação aos finais de semana';
         this.inputData = document.querySelector('#data');
         this.inputQuantidade = document.querySelector('#quantidade');
         this.inputValor = document.querySelector('#valor');
@@ -14,12 +16,19 @@ export class NegociacaoController {
     }
     adiciona() {
         const negociacao = this.criaNegociacao();
-        this.negociacoes.adiciona(negociacao);
-        this.negociacoesView.update(this.negociacoes);
-        console.log(this.negociacoes.lista());
-        this.mensagemView.update('Negociação adicionada com sucesso');
-        this.limpaFormulario();
+        if (negociacao.data.getDay() !== 0 && negociacao.data.getDay() !== 6) {
+            this.negociacoes.adiciona(negociacao);
+            this.atualizaView();
+        }
+        else {
+            this.mensagemView.update(this.mensagemFalha);
+        }
     }
+    // verificaDiaUtil(data: Date): boolean {
+    //     if(data.getDay() < 0 && data.getDay() > 6) {
+    //         return false
+    //     } else true
+    // }
     criaNegociacao() {
         const exp = /-/g;
         const date = new Date(this.inputData.value.replace(exp, ','));
@@ -33,7 +42,9 @@ export class NegociacaoController {
         this.inputValor.value = '';
         this.inputData.focus();
     }
-    exibaTabela() {
+    atualizaView() {
         this.negociacoesView.update(this.negociacoes);
+        this.mensagemView.update(this.mensagemSucesso);
+        this.limpaFormulario();
     }
 }
