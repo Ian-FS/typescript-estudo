@@ -2,13 +2,14 @@ import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from '../models/negociacoes.js';
 import { NegociacoesView } from "../views/negociacoes-views.js";
 import { MensagemView } from '../views/mensagem-view.js';
+import { DiasDaSemana } from '../enums/dias-da-semana';
 export class NegociacaoController {
     constructor() {
         this.negociacoes = new Negociacoes();
         this.negociacoesView = new NegociacoesView('#negociacoesView');
         this.mensagemView = new MensagemView('#mensagemView');
         this.mensagemSucesso = 'Negociação adicionada com sucesso';
-        this.mensagemFalha = 'Não é possivel adicionar uma negociação aos finais de semana';
+        this.mensagemFalha = 'Não é possivel adicionar negociações aos finais de semana';
         this.inputData = document.querySelector('#data');
         this.inputQuantidade = document.querySelector('#quantidade');
         this.inputValor = document.querySelector('#valor');
@@ -16,19 +17,19 @@ export class NegociacaoController {
     }
     adiciona() {
         const negociacao = this.criaNegociacao();
-        if (negociacao.data.getDay() !== 0 && negociacao.data.getDay() !== 6) {
+        if (this.isDiaUtil(negociacao.data)) {
             this.negociacoes.adiciona(negociacao);
             this.atualizaView();
+            this.limpaFormulario();
         }
         else {
             this.mensagemView.update(this.mensagemFalha);
+            this.limpaFormulario();
         }
     }
-    // verificaDiaUtil(data: Date): boolean {
-    //     if(data.getDay() < 0 && data.getDay() > 6) {
-    //         return false
-    //     } else true
-    // }
+    isDiaUtil(data) {
+        return data.getDay() !== DiasDaSemana.DOMINGO && data.getDay() !== DiasDaSemana.SABADO;
+    }
     criaNegociacao() {
         const exp = /-/g;
         const date = new Date(this.inputData.value.replace(exp, ','));

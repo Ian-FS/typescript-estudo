@@ -2,6 +2,7 @@ import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from '../models/negociacoes.js';
 import { NegociacoesView } from "../views/negociacoes-views.js";
 import { MensagemView } from '../views/mensagem-view.js';
+import { DiasDaSemana } from '../enums/dias-da-semana';
 
 export class NegociacaoController{
 
@@ -12,7 +13,7 @@ export class NegociacaoController{
     private negociacoesView = new NegociacoesView('#negociacoesView')
     private mensagemView = new MensagemView('#mensagemView');
     private mensagemSucesso = 'Negociação adicionada com sucesso'
-    private mensagemFalha = 'Não é possivel adicionar uma negociação aos finais de semana'
+    private mensagemFalha = 'Não é possivel adicionar negociações aos finais de semana'
 
     constructor() {
         this.inputData = document.querySelector('#data');
@@ -23,20 +24,20 @@ export class NegociacaoController{
 
     public adiciona(): void {
         const negociacao = this.criaNegociacao();
-        if(negociacao.data.getDay() !== 0 && negociacao.data.getDay() !== 6) {
+        if(this.isDiaUtil(negociacao.data)) {
             this.negociacoes.adiciona(negociacao);
             this.atualizaView();
+            this.limpaFormulario();
         } else {
-            this.mensagemView.update(this.mensagemFalha)
+            this.mensagemView.update(this.mensagemFalha);
+            this.limpaFormulario();
         }
         
     }
 
-    // verificaDiaUtil(data: Date): boolean {
-    //     if(data.getDay() < 0 && data.getDay() > 6) {
-    //         return false
-    //     } else true
-    // }
+    private isDiaUtil(data: Date): boolean {
+        return data.getDay() !== DiasDaSemana.DOMINGO && data.getDay() !== DiasDaSemana.SABADO
+    }
 
     private criaNegociacao(): Negociacao {
         const exp = /-/g;
