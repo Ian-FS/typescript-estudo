@@ -6,7 +6,7 @@ import { DiasDaSemana } from '../enums/dias-da-semana.js';
 export class NegociacaoController {
     constructor() {
         this.negociacoes = new Negociacoes();
-        this.negociacoesView = new NegociacoesView('#negociacoesView');
+        this.negociacoesView = new NegociacoesView('#negociacoesView', true);
         this.mensagemView = new MensagemView('#mensagemView');
         this.mensagemSucesso = 'Negociação adicionada com sucesso';
         this.mensagemFalha = 'Não é possivel adicionar negociações aos finais de semana';
