@@ -24,7 +24,6 @@ export class NegociacaoController{
     }
 
     @logarTempoDeExecucao()
-    
     public adiciona(): void {
         const negociacao = Negociacao.criaDe (
             this.inputData.value,
