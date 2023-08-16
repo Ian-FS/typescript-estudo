@@ -4,6 +4,7 @@ import { NegociacoesView } from "../views/negociacoes-views.js";
 import { MensagemView } from '../views/mensagem-view.js';
 import { DiasDaSemana } from '../enums/dias-da-semana.js';
 import { logarTempoDeExecucao } from "../decorators/logar-tempo-de-execucao.js";
+import { inspect } from "../decorators/inspect.js";
 
 export class NegociacaoController{
 
@@ -23,6 +24,7 @@ export class NegociacaoController{
         this.negociacoesView;
     }
 
+    @inspect()
     @logarTempoDeExecucao()
     public adiciona(): void {
         const negociacao = Negociacao.criaDe (
@@ -44,6 +46,7 @@ export class NegociacaoController{
         
     }
 
+    @inspect()
     private isDiaUtil(data: Date): boolean {
         return data.getDay() !== DiasDaSemana.DOMINGO && data.getDay() !== DiasDaSemana.SABADO
     }
@@ -55,6 +58,7 @@ export class NegociacaoController{
         this.inputData.focus();
     }
 
+    @inspect()
     private atualizaView(): void {
         this.negociacoesView.update(this.negociacoes)
         this.mensagemView.update(this.mensagemSucesso)
