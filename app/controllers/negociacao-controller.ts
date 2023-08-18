@@ -12,7 +12,7 @@ export class NegociacaoController{
     private inputQuantidade:HTMLInputElement;
     private inputValor:HTMLInputElement;
     private negociacoes = new Negociacoes();
-    private negociacoesView = new NegociacoesView('#negociacoesView', true)
+    private negociacoesView = new NegociacoesView('#negociacoesView')
     private mensagemView = new MensagemView('#mensagemView');
     private mensagemSucesso = 'Negociação adicionada com sucesso'
     private mensagemFalha = 'Não é possivel adicionar negociações aos finais de semana'
@@ -21,7 +21,7 @@ export class NegociacaoController{
         this.inputData = document.querySelector('#data') as HTMLInputElement;
         this.inputQuantidade = document.querySelector('#quantidade') as HTMLInputElement;
         this.inputValor = document.querySelector('#valor') as HTMLInputElement;
-        this.negociacoesView;
+        this.negociacoesView.update(this.negociacoes);
     }
 
     @inspect

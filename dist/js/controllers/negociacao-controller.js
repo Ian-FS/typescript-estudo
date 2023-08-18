@@ -14,14 +14,14 @@ import { inspect } from "../decorators/inspect.js";
 export class NegociacaoController {
     constructor() {
         this.negociacoes = new Negociacoes();
-        this.negociacoesView = new NegociacoesView('#negociacoesView', true);
+        this.negociacoesView = new NegociacoesView('#negociacoesView');
         this.mensagemView = new MensagemView('#mensagemView');
         this.mensagemSucesso = 'Negociação adicionada com sucesso';
         this.mensagemFalha = 'Não é possivel adicionar negociações aos finais de semana';
         this.inputData = document.querySelector('#data');
         this.inputQuantidade = document.querySelector('#quantidade');
         this.inputValor = document.querySelector('#valor');
-        this.negociacoesView;
+        this.negociacoesView.update(this.negociacoes);
     }
     adiciona() {
         const negociacao = Negociacao.criaDe(this.inputData.value, this.inputQuantidade.value, this.inputValor.value);
@@ -52,12 +52,12 @@ export class NegociacaoController {
     }
 }
 __decorate([
-    inspect(),
+    inspect,
     logarTempoDeExecucao()
 ], NegociacaoController.prototype, "adiciona", null);
 __decorate([
-    inspect()
+    inspect
 ], NegociacaoController.prototype, "isDiaUtil", null);
 __decorate([
-    inspect()
+    inspect
 ], NegociacaoController.prototype, "atualizaView", null);
