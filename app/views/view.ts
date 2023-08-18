@@ -18,7 +18,7 @@ export abstract class View <T> {
 
     protected abstract template(model: T):string;
 
-    @inspect()
+    @inspect
     public update(model: T) {
         let template = this.template(model);
         if(this.escape){

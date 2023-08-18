@@ -24,7 +24,7 @@ export class NegociacaoController{
         this.negociacoesView;
     }
 
-    @inspect()
+    @inspect
     @logarTempoDeExecucao()
     public adiciona(): void {
         const negociacao = Negociacao.criaDe (
@@ -46,7 +46,7 @@ export class NegociacaoController{
         
     }
 
-    @inspect()
+    @inspect
     private isDiaUtil(data: Date): boolean {
         return data.getDay() !== DiasDaSemana.DOMINGO && data.getDay() !== DiasDaSemana.SABADO
     }
@@ -58,7 +58,7 @@ export class NegociacaoController{
         this.inputData.focus();
     }
 
-    @inspect()
+    @inspect
     private atualizaView(): void {
         this.negociacoesView.update(this.negociacoes)
         this.mensagemView.update(this.mensagemSucesso)
