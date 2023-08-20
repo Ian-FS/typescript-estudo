@@ -16,7 +16,6 @@ export abstract class View <T> {
 
     protected abstract template(model: T):string;
 
-    @inspect
     public update(model: T) {
         let template = this.template(model);
         this.elemento.innerHTML = template;

@@ -11,6 +11,7 @@ import { MensagemView } from '../views/mensagem-view.js';
 import { DiasDaSemana } from '../enums/dias-da-semana.js';
 import { logarTempoDeExecucao } from "../decorators/logar-tempo-de-execucao.js";
 import { inspect } from "../decorators/inspect.js";
+import { injectDOM } from "../decorators/injectDOM.js";
 export class NegociacaoController {
     constructor() {
         this.negociacoes = new Negociacoes();
@@ -18,14 +19,10 @@ export class NegociacaoController {
         this.mensagemView = new MensagemView('#mensagemView');
         this.mensagemSucesso = 'Negociação adicionada com sucesso';
         this.mensagemFalha = 'Não é possivel adicionar negociações aos finais de semana';
-        this.inputData = document.querySelector('#data');
-        this.inputQuantidade = document.querySelector('#quantidade');
-        this.inputValor = document.querySelector('#valor');
         this.negociacoesView.update(this.negociacoes);
     }
     adiciona() {
         const negociacao = Negociacao.criaDe(this.inputData.value, this.inputQuantidade.value, this.inputValor.value);
-        console.log(negociacao.data);
         if (this.isDiaUtil(negociacao.data)) {
             this.negociacoes.adiciona(negociacao);
             this.atualizaView();
@@ -52,12 +49,15 @@ export class NegociacaoController {
     }
 }
 __decorate([
+    injectDOM('#data')
+], NegociacaoController.prototype, "inputData", void 0);
+__decorate([
+    injectDOM('#quantidade')
+], NegociacaoController.prototype, "inputQuantidade", void 0);
+__decorate([
+    injectDOM('#valor')
+], NegociacaoController.prototype, "inputValor", void 0);
+__decorate([
     inspect,
     logarTempoDeExecucao()
 ], NegociacaoController.prototype, "adiciona", null);
-__decorate([
-    inspect
-], NegociacaoController.prototype, "isDiaUtil", null);
-__decorate([
-    inspect
-], NegociacaoController.prototype, "atualizaView", null);

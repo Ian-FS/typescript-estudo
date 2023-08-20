@@ -6,7 +6,7 @@ export function inspect(target, propertyKey, description) {
             ------- Parâmetros: ${JSON.stringify(args)}
             `);
         const retorno = metodoOriginal.apply(this, args);
-        console.log(JSON.stringify(retorno));
+        console.log(`---------retorno:${JSON.stringify(retorno)}`);
         return retorno;
     };
     return description;

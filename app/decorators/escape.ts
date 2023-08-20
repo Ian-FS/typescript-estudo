@@ -7,7 +7,7 @@ export function escape(
     descriptor.value = function (...args: any[]) {
         let retorno = metodoOriginal.apply(this, args);
         if(typeof retorno === 'string') {
-            console.log('aplicando o decorator escape')
+            // console.log('aplicando o decorator escape')
             retorno.replace(/<script>[\s\S]*?<\/script>/, '');
         }
 

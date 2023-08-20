@@ -5,11 +5,15 @@ import { MensagemView } from '../views/mensagem-view.js';
 import { DiasDaSemana } from '../enums/dias-da-semana.js';
 import { logarTempoDeExecucao } from "../decorators/logar-tempo-de-execucao.js";
 import { inspect } from "../decorators/inspect.js";
+import { injectDOM } from "../decorators/injectDOM.js";
 
 export class NegociacaoController{
 
+    @injectDOM('#data')
     private inputData:HTMLInputElement;
+    @injectDOM('#quantidade')
     private inputQuantidade:HTMLInputElement;
+    @injectDOM('#valor')
     private inputValor:HTMLInputElement;
     private negociacoes = new Negociacoes();
     private negociacoesView = new NegociacoesView('#negociacoesView')
@@ -18,9 +22,6 @@ export class NegociacaoController{
     private mensagemFalha = 'Não é possivel adicionar negociações aos finais de semana'
 
     constructor() {
-        this.inputData = document.querySelector('#data') as HTMLInputElement;
-        this.inputQuantidade = document.querySelector('#quantidade') as HTMLInputElement;
-        this.inputValor = document.querySelector('#valor') as HTMLInputElement;
         this.negociacoesView.update(this.negociacoes);
     }
 
@@ -33,8 +34,6 @@ export class NegociacaoController{
             this.inputValor.value
         );
 
-        console.log(negociacao.data)
-
         if(this.isDiaUtil(negociacao.data)) {
             this.negociacoes.adiciona(negociacao);
             this.atualizaView();
@@ -46,7 +45,6 @@ export class NegociacaoController{
         
     }
 
-    @inspect
     private isDiaUtil(data: Date): boolean {
         return data.getDay() !== DiasDaSemana.DOMINGO && data.getDay() !== DiasDaSemana.SABADO
     }
@@ -58,7 +56,6 @@ export class NegociacaoController{
         this.inputData.focus();
     }
 
-    @inspect
     private atualizaView(): void {
         this.negociacoesView.update(this.negociacoes)
         this.mensagemView.update(this.mensagemSucesso)
