@@ -3,11 +3,17 @@ export function injectDOM (seletor: string) {
         target: any,
         propertyKey: string
     ) {
+
+        let elemento: HTMLElement
         const getter = function() {
-            const elemento  = document.querySelector(seletor)
+            if(!elemento) {
+                console.log('buscando elemento do DOM')
+                elemento  = document.querySelector(seletor) as HTMLInputElement
+            }
+
             return elemento
         }
-
+        
         Object.defineProperty(
             target, 
             propertyKey, 
