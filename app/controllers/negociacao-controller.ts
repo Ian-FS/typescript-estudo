@@ -62,5 +62,21 @@ export class NegociacaoController{
         this.limpaFormulario()
     }
 
-    public importaDados(): void {}
+    public importaDados(): void {
+        fetch("http://localhost:8080/dados")
+        .then(res => res.json())
+        .then((negociacoesImportadas: Negociacao[])=> {
+            negociacoesImportadas.map(
+                (negociacao) => {
+                    this.negociacoes.adiciona(
+                        new Negociacao(
+                            new Date(),
+                            negociacao.quantidade,
+                            negociacao.valor
+                        )
+                    )
+                }
+            )
+        }).then(()=> this.negociacoesView.update(this.negociacoes))
+    }
 }
