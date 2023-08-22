@@ -25,8 +25,8 @@ export class NegociacoesView extends View <Negociacoes> {
                                 <th>${negociacao.quantidade}</th>
                                 <th>${negociacao.valor}</th>
                             </tr>
-                        `
-                    })}
+                        `;
+                    }).join('')}
                 </tbody>
             </table>
         `

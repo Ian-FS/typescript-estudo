@@ -6,6 +6,7 @@ import { DiasDaSemana } from '../enums/dias-da-semana.js';
 import { logarTempoDeExecucao } from "../decorators/logar-tempo-de-execucao.js";
 import { inspect } from "../decorators/inspect.js";
 import { injectDOM } from "../decorators/injectDOM.js";
+import { NegociacaoDoDia } from "../interfaces/negociacao-do-dia.js";
 
 export class NegociacaoController{
 
@@ -65,14 +66,14 @@ export class NegociacaoController{
     public importaDados(): void {
         fetch("http://localhost:8080/dados")
         .then(res => res.json())
-        .then((negociacoesImportadas: Negociacao[])=> {
+        .then((negociacoesImportadas: NegociacaoDoDia[])=> {
             negociacoesImportadas.map(
-                (negociacao) => {
+                (negociacaoImportada) => {
                     this.negociacoes.adiciona(
                         new Negociacao(
                             new Date(),
-                            negociacao.quantidade,
-                            negociacao.valor
+                            negociacaoImportada.vezes,
+                            negociacaoImportada.montante
                         )
                     )
                 }

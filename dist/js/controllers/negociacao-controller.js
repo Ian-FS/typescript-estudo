@@ -51,8 +51,8 @@ export class NegociacaoController {
         fetch("http://localhost:8080/dados")
             .then(res => res.json())
             .then((negociacoesImportadas) => {
-            negociacoesImportadas.map((negociacao) => {
-                this.negociacoes.adiciona(new Negociacao(new Date(), negociacao.quantidade, negociacao.valor));
+            negociacoesImportadas.map((negociacaoImportada) => {
+                this.negociacoes.adiciona(new Negociacao(new Date(), negociacaoImportada.vezes, negociacaoImportada.montante));
             });
         }).then(() => this.negociacoesView.update(this.negociacoes));
     }
