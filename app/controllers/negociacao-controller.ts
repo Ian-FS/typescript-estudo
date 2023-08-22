@@ -61,4 +61,6 @@ export class NegociacaoController{
         this.mensagemView.update(this.mensagemSucesso)
         this.limpaFormulario()
     }
+
+    public importaDados(): void {}
 }

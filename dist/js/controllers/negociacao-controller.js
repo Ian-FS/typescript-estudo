@@ -47,6 +47,7 @@ export class NegociacaoController {
         this.mensagemView.update(this.mensagemSucesso);
         this.limpaFormulario();
     }
+    importaDados() { }
 }
 __decorate([
     injectDOM('#data')
