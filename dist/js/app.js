@@ -13,7 +13,7 @@ else {
 }
 if (botaoImporta) {
     botaoImporta.addEventListener('click', () => {
-        controller.importaDados();
+        controller.importaNegociacoesDoDia();
     });
 }
 else {

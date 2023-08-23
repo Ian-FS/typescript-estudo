@@ -1,3 +1,4 @@
+import { NegociacoesService } from './../services/negociacoes-service.js';
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from '../models/negociacoes.js';
 import { NegociacoesView } from "../views/negociacoes-views.js";
@@ -6,7 +7,6 @@ import { DiasDaSemana } from '../enums/dias-da-semana.js';
 import { logarTempoDeExecucao } from "../decorators/logar-tempo-de-execucao.js";
 import { inspect } from "../decorators/inspect.js";
 import { injectDOM } from "../decorators/injectDOM.js";
-import { NegociacaoDoDia } from "../interfaces/negociacao-do-dia.js";
 
 export class NegociacaoController{
 
@@ -21,6 +21,7 @@ export class NegociacaoController{
     private mensagemView = new MensagemView('#mensagemView');
     private mensagemSucesso = 'Negociação adicionada com sucesso'
     private mensagemFalha = 'Não é possivel adicionar negociações aos finais de semana'
+    private negociacoesServico = new NegociacoesService
 
     constructor() {
         this.negociacoesView.update(this.negociacoes);
@@ -63,21 +64,8 @@ export class NegociacaoController{
         this.limpaFormulario()
     }
 
-    public importaDados(): void {
-        fetch("http://localhost:8080/dados")
-        .then(res => res.json())
-        .then((negociacoesImportadas: NegociacaoDoDia[])=> {
-            negociacoesImportadas.map(
-                (negociacaoImportada) => {
-                    this.negociacoes.adiciona(
-                        new Negociacao(
-                            new Date(),
-                            negociacaoImportada.vezes,
-                            negociacaoImportada.montante
-                        )
-                    )
-                }
-            )
-        }).then(()=> this.negociacoesView.update(this.negociacoes))
-    }
+    public importaNegociacoesDoDia(): void {
+        this.negociacoesServico.obterNegociacoesDoDia()
+        .then((negociacoesInportadas) => this.negociacoesView.update(negociacoesInportadas))
+    }    
 }

@@ -15,7 +15,7 @@ if (form) {
 
 if (botaoImporta) {
     botaoImporta.addEventListener('click', ()=> {
-        controller.importaDados();
+        controller.importaNegociacoesDoDia();
     })
 }  else {
     throw Error("Não foi possível encontrar botão importa")
