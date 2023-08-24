@@ -13,6 +13,7 @@ import { DiasDaSemana } from '../enums/dias-da-semana.js';
 import { logarTempoDeExecucao } from "../decorators/logar-tempo-de-execucao.js";
 import { inspect } from "../decorators/inspect.js";
 import { injectDOM } from "../decorators/injectDOM.js";
+import { imprimir } from '../utils/imprimir.js';
 export class NegociacaoController {
     constructor() {
         this.negociacoes = new Negociacoes();
@@ -27,6 +28,7 @@ export class NegociacaoController {
         const negociacao = Negociacao.criaDe(this.inputData.value, this.inputQuantidade.value, this.inputValor.value);
         if (this.isDiaUtil(negociacao.data)) {
             this.negociacoes.adiciona(negociacao);
+            imprimir(negociacao);
             this.atualizaView();
             this.limpaFormulario();
         }
@@ -36,7 +38,8 @@ export class NegociacaoController {
         }
     }
     isDiaUtil(data) {
-        return data.getDay() !== DiasDaSemana.DOMINGO && data.getDay() !== DiasDaSemana.SABADO;
+        return data.getDay() !== DiasDaSemana.DOMINGO && data.getDay()
+            !== DiasDaSemana.SABADO;
     }
     limpaFormulario() {
         this.inputData.value = '';
@@ -51,7 +54,11 @@ export class NegociacaoController {
     }
     importaNegociacoesDoDia() {
         this.negociacoesServico.obterNegociacoesDoDia()
-            .then((negociacoesInportadas) => this.negociacoesView.update(negociacoesInportadas));
+            .then((negociacoesInportadas) => {
+            negociacoesInportadas.forEach((negociacaoImportada) => this.negociacoes.adiciona(negociacaoImportada));
+            imprimir(this.negociacoes);
+            this.negociacoesView.update(this.negociacoes);
+        });
     }
 }
 __decorate([

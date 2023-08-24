@@ -8,10 +8,9 @@ export class NegociacoesService {
         return (fetch("http://localhost:8080/dados")
             .then(res => res.json())
             .then((negociacoesImportadas) => {
-            negociacoesImportadas.map((negociacaoImportada) => {
-                this.negociacoes.adiciona(new Negociacao(new Date(), negociacaoImportada.vezes, negociacaoImportada.montante));
+            return negociacoesImportadas.map((negociacaoImportada) => {
+                return new Negociacao(new Date(), negociacaoImportada.vezes, negociacaoImportada.montante);
             });
-            return this.negociacoes;
         }));
     }
 }
