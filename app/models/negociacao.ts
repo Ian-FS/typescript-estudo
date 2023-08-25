@@ -1,15 +1,13 @@
-import { Imprimivel } from "../utils/imprimivel.js";
+import { Imprimivel } from "../interfaces/imprimivel.js";
 
-export class Negociacao extends Imprimivel{
+export class Negociacao implements Imprimivel{
     
 
     constructor(
         private _data: Date,
         private _quantidade: number,
         private _valor: number
-    ){
-        super()
-    }
+    ){}
     
     public static criaDe(inputData:string, inputQuantidade: string, inputValor: string): Negociacao {
         const exp = /-/g;
