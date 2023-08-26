@@ -39,7 +39,7 @@ export class NegociacaoController{
         );
 
         if(this.isDiaUtil(negociacao.data)) {
-            if(this.negociacoes.jaFoiAdicionada(negociacao)) {
+            if(this.negociacoes.jaFoiAdicionado(negociacao)) {
                 this.mensagemView.update(this.mensagemFalhaJaFoiAdicionado);
                 this.limpaFormulario();
             } else {
@@ -79,7 +79,7 @@ export class NegociacaoController{
         .then((negociacoesInportadas) => {
             negociacoesInportadas.forEach(
                 (negociacaoImportada) => {
-                    !this.negociacoes.jaFoiAdicionada(negociacaoImportada) &&
+                    !this.negociacoes.jaFoiAdicionado(negociacaoImportada) &&
                     this.negociacoes.adiciona(negociacaoImportada)
                 } 
             );

@@ -1,8 +1,8 @@
-import { Imprimivel } from '../interfaces/imprimivel.js';
+import { Modelo } from '../interfaces/modelo.js';
 import { Negociacao } from './negociacao.js';
 
 
-export class Negociacoes implements Imprimivel {
+export class Negociacoes implements Modelo<Negociacao>{
     private negociacoes: Array<Negociacao> = []
 
     public adiciona(negociacao: Negociacao) {
@@ -14,7 +14,7 @@ export class Negociacoes implements Imprimivel {
         return this.negociacoes;
     }
 
-    public jaFoiAdicionada(negociacaoAAdicionar: Negociacao): boolean {
+    public jaFoiAdicionado(negociacaoAAdicionar: Negociacao): boolean {
         function ehIgual(negociacaoAtual:Negociacao): boolean {
             return (
                 negociacaoAtual.data.getDate() === negociacaoAAdicionar.data.getDate() &&
