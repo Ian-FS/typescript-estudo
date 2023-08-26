@@ -20,20 +20,27 @@ export class NegociacaoController {
         this.negociacoesView = new NegociacoesView('#negociacoesView');
         this.mensagemView = new MensagemView('#mensagemView');
         this.mensagemSucesso = 'Negociação adicionada com sucesso';
-        this.mensagemFalha = 'Não é possivel adicionar negociações aos finais de semana';
+        this.mensagemFalhaFinalDeSemana = 'Não é possivel adicionar negociações aos finais de semana';
+        this.mensagemFalhaJaFoiAdicionado = 'Negociacão já adicionada';
         this.negociacoesServico = new NegociacoesService;
         this.negociacoesView.update(this.negociacoes);
     }
     adiciona() {
         const negociacao = Negociacao.criaDe(this.inputData.value, this.inputQuantidade.value, this.inputValor.value);
         if (this.isDiaUtil(negociacao.data)) {
-            this.negociacoes.adiciona(negociacao);
-            imprimir(negociacao);
-            this.atualizaView();
-            this.limpaFormulario();
+            if (this.negociacoes.jaFoiAdicionada(negociacao)) {
+                this.mensagemView.update(this.mensagemFalhaJaFoiAdicionado);
+                this.limpaFormulario();
+            }
+            else {
+                this.negociacoes.adiciona(negociacao);
+                imprimir(negociacao);
+                this.atualizaView();
+                this.limpaFormulario();
+            }
         }
         else {
-            this.mensagemView.update(this.mensagemFalha);
+            this.mensagemView.update(this.mensagemFalhaFinalDeSemana);
             this.limpaFormulario();
         }
     }
@@ -55,8 +62,10 @@ export class NegociacaoController {
     importaNegociacoesDoDia() {
         this.negociacoesServico.obterNegociacoesDoDia()
             .then((negociacoesInportadas) => {
-            negociacoesInportadas.forEach((negociacaoImportada) => this.negociacoes.adiciona(negociacaoImportada));
-            imprimir(this.negociacoes);
+            negociacoesInportadas.forEach((negociacaoImportada) => {
+                !this.negociacoes.jaFoiAdicionada(negociacaoImportada) &&
+                    this.negociacoes.adiciona(negociacaoImportada);
+            });
             this.negociacoesView.update(this.negociacoes);
         });
     }

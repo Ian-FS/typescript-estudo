@@ -21,7 +21,8 @@ export class NegociacaoController{
     private negociacoesView = new NegociacoesView('#negociacoesView')
     private mensagemView = new MensagemView('#mensagemView');
     private mensagemSucesso = 'Negociação adicionada com sucesso'
-    private mensagemFalha = 'Não é possivel adicionar negociações aos finais de semana'
+    private mensagemFalhaFinalDeSemana = 'Não é possivel adicionar negociações aos finais de semana'
+    private mensagemFalhaJaFoiAdicionado = 'Negociacão já adicionada'
     private negociacoesServico = new NegociacoesService
 
     constructor() {
@@ -38,12 +39,18 @@ export class NegociacaoController{
         );
 
         if(this.isDiaUtil(negociacao.data)) {
-            this.negociacoes.adiciona(negociacao);
-            imprimir(negociacao)
-            this.atualizaView();
-            this.limpaFormulario();
+            if(this.negociacoes.jaFoiAdicionada(negociacao)) {
+                this.mensagemView.update(this.mensagemFalhaJaFoiAdicionado);
+                this.limpaFormulario();
+            } else {
+                this.negociacoes.adiciona(negociacao);
+                imprimir(negociacao)
+                this.atualizaView();
+                this.limpaFormulario();
+            }
+            
         } else {
-            this.mensagemView.update(this.mensagemFalha);
+            this.mensagemView.update(this.mensagemFalhaFinalDeSemana);
             this.limpaFormulario();
         }
         
@@ -70,11 +77,12 @@ export class NegociacaoController{
     public importaNegociacoesDoDia(): void {
         this.negociacoesServico.obterNegociacoesDoDia()
         .then((negociacoesInportadas) => {
-
             negociacoesInportadas.forEach(
-                (negociacaoImportada) => this.negociacoes.adiciona(negociacaoImportada) 
+                (negociacaoImportada) => {
+                    !this.negociacoes.jaFoiAdicionada(negociacaoImportada) &&
+                    this.negociacoes.adiciona(negociacaoImportada)
+                } 
             );
-            imprimir(this.negociacoes)
             this.negociacoesView.update(this.negociacoes);
         })   
     }

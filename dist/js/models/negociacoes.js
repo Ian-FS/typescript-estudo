@@ -1,14 +1,21 @@
-import { Imprimivel } from '../utils/imprimivel.js';
-export class Negociacoes extends Imprimivel {
+export class Negociacoes {
     constructor() {
-        super(...arguments);
         this.negociacoes = [];
     }
     adiciona(negociacao) {
-        this.negociacoes.push(negociacao);
+        const isAdd = this.lista().some((negociacaoAdicionada) => negociacao === negociacaoAdicionada);
+        !isAdd && this.negociacoes.push(negociacao);
     }
     lista() {
         return this.negociacoes;
+    }
+    jaFoiAdicionada(negociacaoAAdicionar) {
+        function ehIgual(negociacaoAtual) {
+            return (negociacaoAtual.data.getDate() === negociacaoAAdicionar.data.getDate() &&
+                negociacaoAtual.quantidade === negociacaoAAdicionar.quantidade &&
+                negociacaoAtual.valor === negociacaoAAdicionar.valor);
+        }
+        return this.negociacoes.some(ehIgual);
     }
     paraTexto() {
         return JSON.stringify(this.negociacoes, null, 2);
